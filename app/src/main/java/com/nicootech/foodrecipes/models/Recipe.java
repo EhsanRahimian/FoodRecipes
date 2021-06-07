@@ -9,15 +9,15 @@ public class Recipe implements Parcelable {
     private String title;
     private String publisher;
     private String[] ingredients;
-    private String _id;
+    private String recipe_id;
     private String image_url;
     private float social_rank;
 
-    public Recipe(String title, String publisher, String[] ingredients, String _id, String image_url, float social_rank) {
+    public Recipe(String title, String publisher, String[] ingredients, String recipe_id, String image_url, float social_rank) {
         this.title = title;
         this.publisher = publisher;
         this.ingredients = ingredients;
-        this._id = _id;
+        this.recipe_id = recipe_id;
         this.image_url = image_url;
         this.social_rank = social_rank;
 
@@ -30,7 +30,7 @@ public class Recipe implements Parcelable {
         title = in.readString();
         publisher = in.readString();
         ingredients = in.createStringArray();
-        _id = in.readString();
+        recipe_id = in.readString();
         image_url = in.readString();
         social_rank = in.readFloat();
     }
@@ -71,12 +71,12 @@ public class Recipe implements Parcelable {
         this.ingredients = ingredients;
     }
 
-    public String get_id() {
-        return _id;
+    public String getRecipe_id() {
+        return recipe_id;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
+    public void setRecipe_id(String recipe_id) {
+        this.recipe_id = recipe_id;
     }
 
     public String getImage_url() {
@@ -101,7 +101,7 @@ public class Recipe implements Parcelable {
                 "title='" + title + '\'' +
                 ", publisher='" + publisher + '\'' +
                 ", ingredients=" + Arrays.toString(ingredients) +
-                ", _id='" + _id + '\'' +
+                ", _id='" + recipe_id + '\'' +
                 ", image_url='" + image_url + '\'' +
                 ", social_rank=" + social_rank +
                 '}';
@@ -117,7 +117,7 @@ public class Recipe implements Parcelable {
         dest.writeString(title);
         dest.writeString(publisher);
         dest.writeStringArray(ingredients);
-        dest.writeString(_id);
+        dest.writeString(recipe_id);
         dest.writeString(image_url);
         dest.writeFloat(social_rank);
     }
