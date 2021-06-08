@@ -1,17 +1,14 @@
 package com.nicootech.foodrecipes.viewmodel.repositories;
 
 import com.nicootech.foodrecipes.models.Recipe;
-
+import com.nicootech.foodrecipes.request.RecipeApiClient;
 import java.util.List;
-
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
 
 public class RecipeRepository {
 
     private static RecipeRepository instance;
-    private MutableLiveData<List<Recipe>> mRecipes;
+    private RecipeApiClient mRecipeApiClient;
 
     public static RecipeRepository getInstance(){
         if(instance == null){
@@ -21,10 +18,12 @@ public class RecipeRepository {
     }
 
     public RecipeRepository() {
-        mRecipes = new MutableLiveData<>();
+        mRecipeApiClient = RecipeApiClient.getInstance();
     }
 
     public LiveData<List<Recipe>> getRecipes(){
-        return mRecipes;
+        return mRecipeApiClient.getRecipes();
     }
+
+
 }
