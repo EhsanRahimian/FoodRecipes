@@ -4,6 +4,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.nicootech.foodrecipes.R;
 import com.nicootech.foodrecipes.models.Recipe;
 
@@ -31,6 +33,15 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+
+        RequestOptions requestOptions = new RequestOptions()
+                .placeholder(R.drawable.ic_launcher_background);
+
+        Glide.with(holder.itemView.getContext())
+                .setDefaultRequestOptions(requestOptions)
+                .load(mRecipe.get(position))
+                .into(((RecipeViewHolder)holder).image);
+
         ((RecipeViewHolder)holder).title.setText(mRecipe.get(position).getTitle());
         ((RecipeViewHolder)holder).publisher.setText(mRecipe.get(position).getPublisher());
         ((RecipeViewHolder)holder).socialScore.setText(String.valueOf(Math.round(mRecipe.get(position).getSocial_rank())));
