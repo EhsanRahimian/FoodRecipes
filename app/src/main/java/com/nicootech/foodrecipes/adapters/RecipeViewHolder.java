@@ -17,7 +17,6 @@ public class RecipeViewHolder extends RecyclerView.ViewHolder implements View.On
 
 
     public RecipeViewHolder(@NonNull View itemView, OnRecipeListener onRecipeListener) {
-
         super(itemView);
         this.onRecipeListener = onRecipeListener;
         title = itemView.findViewById(R.id.recipe_title);

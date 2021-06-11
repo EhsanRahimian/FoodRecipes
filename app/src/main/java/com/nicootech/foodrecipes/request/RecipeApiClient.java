@@ -22,7 +22,6 @@ import static com.nicootech.foodrecipes.util.Constants.NETWORK_TIMEOUT;
 public class RecipeApiClient {
 
     private static final String TAG = "RecipeApiClient";
-    
     private static RecipeApiClient instance;
 
     private MutableLiveData<List<Recipe>> mRecipes;
@@ -43,7 +42,7 @@ public class RecipeApiClient {
         return mRecipes;
     }
 
-    public void searchRecipeApi(String query, int pageNumber){
+    public void searchRecipesApi(String query, int pageNumber){
         if(mRetrieveRecipeRunnable != null){
             mRetrieveRecipeRunnable = null; // because we need to essentially instantiated a brand new one
         }
@@ -77,7 +76,7 @@ public class RecipeApiClient {
 
             try {
                 Response response = getRecipes(query,pageNumber).execute();
-                if(cancelRequest == true){
+                if(cancelRequest){
                     return;
                 }
                 if(response.code() == 200){
@@ -92,7 +91,7 @@ public class RecipeApiClient {
 
                 }else {
                     String error = response.errorBody().string();
-                    Log.e(TAG, "run: "+ error);
+                    Log.e(TAG, "run: error: "+ error);
                     mRecipes.postValue(null);
                 }
             } catch (IOException e) {
@@ -103,14 +102,15 @@ public class RecipeApiClient {
         }
 
         private Call<RecipeSearchResponse> getRecipes(String query, int pageNumber){
-            return ServiceGenerator.getRecipeApi().searchRecipe(query,String.valueOf(pageNumber));
+            return ServiceGenerator.getRecipeApi().searchRecipe(
+                    query,
+                    String.valueOf(pageNumber));
         }
         private void cancelRequest(){
-            Log.d(TAG, "cancelRequest: canceling the search request.");
+            Log.d(TAG, "cancelRequest: canceling the retrieval query.");
             cancelRequest = true;
         }
 
     }
-
 
 }

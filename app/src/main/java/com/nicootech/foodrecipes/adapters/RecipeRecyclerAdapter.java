@@ -9,6 +9,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.nicootech.foodrecipes.R;
 import com.nicootech.foodrecipes.models.Recipe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -16,45 +17,48 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Recipe> mRecipe;
+    private List<Recipe> mRecipes;
     private OnRecipeListener mOnRecipeListener;
 
-    public RecipeRecyclerAdapter(List<Recipe> mRecipe, OnRecipeListener mOnRecipeListener) {
-        this.mRecipe = mRecipe;
-        this.mOnRecipeListener = mOnRecipeListener;
+    public RecipeRecyclerAdapter(OnRecipeListener onRecipeListener) {
+        mOnRecipeListener = onRecipeListener;
+        mRecipes = new ArrayList<>();
     }
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_recipe_list_item, parent,false);
         return new RecipeViewHolder(view,mOnRecipeListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        // set the image
+        RequestOptions options = new RequestOptions()
+//                .placeholder(R.drawable.ic_launcher_background);
+                .centerCrop()
+                .error(R.drawable.ic_launcher_background);
 
-        RequestOptions requestOptions = new RequestOptions()
-                .placeholder(R.drawable.ic_launcher_background);
-
-        Glide.with(holder.itemView.getContext())
-                .setDefaultRequestOptions(requestOptions)
-                .load(mRecipe.get(position))
+        Glide.with(((RecipeViewHolder) holder).itemView)
+                .setDefaultRequestOptions(options)
+                .load(mRecipes.get(position).getImage_url())
                 .into(((RecipeViewHolder)holder).image);
 
-        ((RecipeViewHolder)holder).title.setText(mRecipe.get(position).getTitle());
-        ((RecipeViewHolder)holder).publisher.setText(mRecipe.get(position).getPublisher());
-        ((RecipeViewHolder)holder).socialScore.setText(String.valueOf(Math.round(mRecipe.get(position).getSocial_rank())));
+
+        ((RecipeViewHolder)holder).title.setText(mRecipes.get(position).getTitle());
+        ((RecipeViewHolder)holder).publisher.setText(mRecipes.get(position).getPublisher());
+        ((RecipeViewHolder)holder).socialScore.setText(String.valueOf(Math.round(mRecipes.get(position).getSocial_rank())));
 
     }
 
     @Override
     public int getItemCount() {
-        return mRecipe.size();
+        return mRecipes.size();
     }
 
-    public void setRecipe(List<Recipe>recipes){
-        mRecipe = recipes;
+    public void setRecipes(List<Recipe>recipes){
+        mRecipes = recipes;
         notifyDataSetChanged();
     }
 }

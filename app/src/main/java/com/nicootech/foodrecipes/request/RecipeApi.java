@@ -9,7 +9,7 @@ import retrofit2.http.Query;
 
 public interface RecipeApi {
     //SEARCH => https://recipesapi.herokuapp.com/api/v2/recipes
-    @GET("api/v2/recipes")
+    @GET("api/search")
     Call<RecipeSearchResponse> searchRecipe(
             @Query("q") String query,
             @Query("page") String page

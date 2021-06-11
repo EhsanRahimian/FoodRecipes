@@ -1,4 +1,4 @@
-package com.nicootech.foodrecipes.viewmodel.repositories;
+package com.nicootech.foodrecipes.repositories;
 
 import com.nicootech.foodrecipes.models.Recipe;
 import com.nicootech.foodrecipes.request.RecipeApiClient;
@@ -17,7 +17,7 @@ public class RecipeRepository {
         return instance;
     }
 
-    public RecipeRepository() {
+    private RecipeRepository() {
         mRecipeApiClient = RecipeApiClient.getInstance();
     }
 
@@ -29,7 +29,7 @@ public class RecipeRepository {
         if(pageNumber == 0){
             pageNumber = 1;
         }
-        mRecipeApiClient.searchRecipeApi(query,pageNumber);
+        mRecipeApiClient.searchRecipesApi(query,pageNumber);
     }
 
 

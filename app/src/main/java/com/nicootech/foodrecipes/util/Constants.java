@@ -5,7 +5,6 @@ public class Constants {
 
     public static final int NETWORK_TIMEOUT = 3000;
 
-    public static final String API_KEY = "";
 
 
 }
