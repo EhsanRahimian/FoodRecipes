@@ -2,6 +2,8 @@ package com.nicootech.foodrecipes;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.SearchView;
+
 import com.nicootech.foodrecipes.adapters.OnRecipeListener;
 import com.nicootech.foodrecipes.adapters.RecipeRecyclerAdapter;
 import com.nicootech.foodrecipes.models.Recipe;
@@ -33,7 +35,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
 
         initRecyclerView();
         subscribeObserver();
-        testRetrofitRequest();
+        initSearchView();
 
     }
 
@@ -49,14 +51,30 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
             }
         });
     }
-    private void testRetrofitRequest(){
-        mRecipeListViewModel.searchRecipeApi("bbq", 1);
-    }
 
     private void initRecyclerView(){
         mAdapter = new RecipeRecyclerAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void initSearchView(){
+        final SearchView searchView = findViewById(R.id.search_view);
+        searchView.setQueryHint("seafood...");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                mRecipeListViewModel.searchRecipeApi(query, 1);
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     @Override
