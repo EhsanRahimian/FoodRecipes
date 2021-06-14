@@ -7,8 +7,9 @@ import android.widget.SearchView;
 import com.nicootech.foodrecipes.adapters.OnRecipeListener;
 import com.nicootech.foodrecipes.adapters.RecipeRecyclerAdapter;
 import com.nicootech.foodrecipes.models.Recipe;
+import com.nicootech.foodrecipes.util.VerticalSpacingItemDecorator;
 import com.nicootech.foodrecipes.viewmodel.RecipeListViewModel;
-import com.nicootech.foodrecipes.viewmodel.Testing;
+import com.nicootech.foodrecipes.util.Testing;
 
 import java.util.List;
 
@@ -57,8 +58,11 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
 
     private void initRecyclerView(){
         mAdapter = new RecipeRecyclerAdapter(this);
+        VerticalSpacingItemDecorator itemDecorator = new VerticalSpacingItemDecorator(30);
+        mRecyclerView.addItemDecoration(itemDecorator);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
     }
 
     private void initSearchView(){
@@ -84,7 +88,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
 
     @Override
     public void onRecipeClick(int position) {
-        
+
         Log.d(TAG, "onRecipeClick: clicked. " + position);
     }
 

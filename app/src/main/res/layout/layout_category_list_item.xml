@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
+    android:background="@color/white"
     android:padding="15dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -24,7 +25,7 @@
         android:layout_height="wrap_content"
         android:text="@string/bbq"
         android:textColor="@color/black"
-        android:textSize="25sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.30"
         app:layout_constraintLeft_toLeftOf="parent"

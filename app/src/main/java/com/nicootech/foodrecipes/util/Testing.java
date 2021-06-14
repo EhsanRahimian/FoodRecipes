@@ -1,4 +1,4 @@
-package com.nicootech.foodrecipes.viewmodel;
+package com.nicootech.foodrecipes.util;
 
 import android.util.Log;
 
