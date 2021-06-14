@@ -36,6 +36,9 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
         initRecyclerView();
         subscribeObserver();
         initSearchView();
+        if(!mRecipeListViewModel.isIsViewingRecipes()){
+            displaySearchCategories();
+        }
 
     }
 
@@ -85,6 +88,13 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
 
     @Override
     public void onCategoryClick(String category) {
+        mAdapter.displayLoading();
+        mRecipeListViewModel.searchRecipeApi(category, 1);
+    }
 
+    private void displaySearchCategories(){
+        Log.d(TAG, "displaySearchCategories: called.");
+        mRecipeListViewModel.setIsViewingRecipes(false);
+        mAdapter.displaySearchCategories();
     }
 }
