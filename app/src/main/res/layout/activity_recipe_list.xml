@@ -15,9 +15,11 @@
             android:id="@+id/toolbar"
             app:layout_scrollFlags="scroll|enterAlways">
             <SearchView
+
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:id="@+id/search_view">
+
             </SearchView>
 
         </androidx.appcompat.widget.Toolbar>
