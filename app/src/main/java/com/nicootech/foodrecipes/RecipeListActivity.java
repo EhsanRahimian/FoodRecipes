@@ -79,6 +79,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
                 return false;
             }
         });
+
     }
 
     @Override
