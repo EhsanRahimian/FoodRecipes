@@ -79,7 +79,7 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public int getItemViewType(int position) {
-       if(mRecipes.get(position).getTitle().equals("LOADING...")) {
+       if(mRecipes.get(position).getTitle().equals("LOADING....")) {
            return LOADING_TYPE;
        }else {
            return RECIPE_TYPE;
@@ -89,7 +89,7 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void displayLoading(){
         if(!isLoading()){
             Recipe recipe = new Recipe();
-            recipe.setTitle("LOADING...");
+            recipe.setTitle("LOADING....");
             List<Recipe>loadingList = new ArrayList<>();
             loadingList.add(recipe);
             mRecipes = loadingList;
@@ -100,7 +100,7 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private boolean isLoading(){
         if(mRecipes != null){
             if(mRecipes.size()>0){
-                if(mRecipes.get(mRecipes.size() - 1).getTitle().equals("LOADING...")){
+                if(mRecipes.get(mRecipes.size() - 1).getTitle().equals("LOADING....")){
                     return true;
                 }
             }
