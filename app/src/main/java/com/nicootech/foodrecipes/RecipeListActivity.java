@@ -84,6 +84,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
 
     @Override
     public void onRecipeClick(int position) {
+        
         Log.d(TAG, "onRecipeClick: clicked. " + position);
     }
 
