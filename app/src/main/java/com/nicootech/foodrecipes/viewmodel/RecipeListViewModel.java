@@ -1,6 +1,8 @@
 package com.nicootech.foodrecipes.viewmodel;
 
 
+import android.widget.SearchView;
+
 import com.nicootech.foodrecipes.models.Recipe;
 
 import com.nicootech.foodrecipes.repositories.RecipeRepository;
@@ -14,9 +16,12 @@ public class RecipeListViewModel extends ViewModel {
 
     private RecipeRepository mRecipeRepository;
     private boolean mIsViewingRecipes;
+    public boolean mIsPerformingQuery;
+
 
     public RecipeListViewModel() {
         mRecipeRepository = RecipeRepository.getInstance();
+        mIsPerformingQuery = false;
     }
 
     public LiveData<List<Recipe>> getRecipes(){
@@ -25,7 +30,16 @@ public class RecipeListViewModel extends ViewModel {
 
     public void searchRecipeApi(String query, int pageNumber){
         mIsViewingRecipes = true;
+        mIsPerformingQuery = true;
         mRecipeRepository.searchRecipeApi(query,pageNumber);
+    }
+
+    public void setIsPerformingQuery(boolean isPerformingQuery) {
+        mIsPerformingQuery = isPerformingQuery;
+    }
+
+    public boolean ismIsPerformingQuery() {
+        return mIsPerformingQuery;
     }
 
     public boolean isIsViewingRecipes(){
@@ -36,11 +50,17 @@ public class RecipeListViewModel extends ViewModel {
         mIsViewingRecipes = isViewingRecipes;
     }
     public boolean onBackButtonPressed(){
+        if(mIsPerformingQuery){
+           //cancel query
+            mRecipeRepository.cancelRequest();
+            mIsPerformingQuery = false;
+        }
         if(mIsViewingRecipes){
            mIsViewingRecipes = false;
            return false;
         }
         return true;
     }
+
 
 }
