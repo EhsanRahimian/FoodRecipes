@@ -2,6 +2,8 @@ package com.nicootech.foodrecipes;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.SearchView;
 
 import com.nicootech.foodrecipes.adapters.OnRecipeListener;
@@ -13,6 +15,7 @@ import com.nicootech.foodrecipes.util.Testing;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -42,6 +45,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
         if(!mRecipeListViewModel.isIsViewingRecipes()){
             displaySearchCategories();
         }
+        setSupportActionBar(findViewById(R.id.toolbar));
     }
 
     private void subscribeObserver(){
@@ -117,5 +121,19 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
         else{
             displaySearchCategories();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==R.id.action_categories){
+            displaySearchCategories();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.recipe_serach_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }
