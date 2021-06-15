@@ -42,7 +42,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
         initRecyclerView();
         subscribeObserver();
         initSearchView();
-        if(!mRecipeListViewModel.isIsViewingRecipes()){
+        if(!mRecipeListViewModel.isViewingRecipes()){
             displaySearchCategories();
         }
         setSupportActionBar(findViewById(R.id.toolbar));
@@ -53,7 +53,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
             @Override
             public void onChanged(List<Recipe> recipes) {
                 if(recipes !=null) {
-                    if(mRecipeListViewModel.isIsViewingRecipes()){
+                    if(mRecipeListViewModel.isViewingRecipes()){
                         Testing.printRecipes(recipes, "recipes test");
                         mRecipeListViewModel.setIsPerformingQuery(false);
                         mAdapter.setRecipes(recipes);
@@ -69,6 +69,17 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
         mRecyclerView.addItemDecoration(itemDecorator);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+
+                if(!mRecyclerView.canScrollVertically(1)){
+                    //search the next page
+                    mRecipeListViewModel.searchNextPage();
+                }
+            }
+        });
 
     }
 

@@ -34,20 +34,25 @@ public class RecipeListViewModel extends ViewModel {
         mRecipeRepository.searchRecipeApi(query,pageNumber);
     }
 
-    public void setIsPerformingQuery(boolean isPerformingQuery) {
-        mIsPerformingQuery = isPerformingQuery;
-    }
 
-    public boolean ismIsPerformingQuery() {
+    public void searchNextPage(){
+        if(!mIsPerformingQuery && mIsViewingRecipes){
+            mRecipeRepository.searchNextPage();
+        }
+    }
+    public boolean isPerformingQuery() {
         return mIsPerformingQuery;
     }
 
-    public boolean isIsViewingRecipes(){
+    public boolean isViewingRecipes(){
         return mIsViewingRecipes;
     }
 
     public void setIsViewingRecipes(boolean isViewingRecipes) {
         mIsViewingRecipes = isViewingRecipes;
+    }
+    public void setIsPerformingQuery(boolean isPerformingQuery) {
+        mIsPerformingQuery = isPerformingQuery;
     }
     public boolean onBackButtonPressed(){
         if(mIsPerformingQuery){
