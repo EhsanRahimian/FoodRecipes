@@ -1,6 +1,7 @@
 package com.nicootech.foodrecipes;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -9,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 
 public class RecipeActivity extends BaseActivity {
+
+    private static final String TAG = "RecipeActivity";
 
     private AppCompatImageView mRecipeImage;
     private TextView mRecipeTitle, mRecipeRank;
@@ -29,6 +32,7 @@ public class RecipeActivity extends BaseActivity {
     private void getIncomingIntent(){
       if(getIntent().hasExtra("recipe")){
           Recipe recipe = getIntent().getParcelableExtra("recipe");
+          Log.d(TAG, "getIncomingIntent: "+recipe.getTitle());
       }
     }
 }

@@ -142,16 +142,6 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return false;
     }
 
-    @Override
-    public int getItemCount() {
-        return mRecipes.size();
-    }
-
-    public void setRecipes(List<Recipe>recipes){
-        mRecipes = recipes;
-        notifyDataSetChanged();
-    }
-
     public void displaySearchCategories(){
         List<Recipe> categories = new ArrayList<>();
         for(int i = 0; i < Constants.DEFAULT_SEARCH_CATEGORIES.length; i++){
@@ -164,4 +154,26 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         mRecipes = categories;
         notifyDataSetChanged();
     }
+
+    @Override
+    public int getItemCount() {
+        return mRecipes.size();
+    }
+
+    public void setRecipes(List<Recipe>recipes){
+        mRecipes = recipes;
+        notifyDataSetChanged();
+    }
+
+    public Recipe getSelectedRecipe(int position){
+        if(mRecipes != null){
+            if(mRecipes.size() > 0){
+                return mRecipes.get(position);
+            }
+        }
+        return null;
+    }
+
+
+
 }
