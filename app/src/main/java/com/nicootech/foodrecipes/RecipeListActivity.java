@@ -62,6 +62,13 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
                 }
             }
         });
+
+        mRecipeListViewModel.isQueryExhausted().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean) Log.d(TAG, "onChanged: the query is exhausted...");
+            }
+        });
     }
 
     private void initRecyclerView(){
@@ -92,7 +99,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
             public boolean onQueryTextSubmit(String query) {
 
                 mAdapter.displayLoading();
-                mRecipeListViewModel.searchRecipeApi(query, 1);
+                mRecipeListViewModel.searchRecipesApi(query, 1);
                 mSearchView.clearFocus();
 
                 return false;
@@ -116,7 +123,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
     @Override
     public void onCategoryClick(String category) {
         mAdapter.displayLoading();
-        mRecipeListViewModel.searchRecipeApi(category, 1);
+        mRecipeListViewModel.searchRecipesApi(category, 1);
         mSearchView.clearFocus();
     }
 
