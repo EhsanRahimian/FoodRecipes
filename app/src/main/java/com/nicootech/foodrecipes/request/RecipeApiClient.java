@@ -29,6 +29,9 @@ public class RecipeApiClient {
     private RetrieveRecipesRunnable mRetrieveRecipesRunnable;
     private MutableLiveData<Recipe> mRecipe;
     private RetrieveRecipeRunnable mRetrieveRecipeRunnable;
+
+    private MutableLiveData<Boolean> mRecipeRequestTimeout = new MutableLiveData<>();
+
     public static RecipeApiClient getInstance(){
         if(instance == null){
             instance = new RecipeApiClient();
@@ -49,6 +52,10 @@ public class RecipeApiClient {
         return mRecipe;
     }
 
+    public LiveData<Boolean> isRecipeRequestTimedOut(){
+        return mRecipeRequestTimeout;
+    }
+
     public void searchRecipesApi(String query, int pageNumber){
         if(mRetrieveRecipesRunnable != null){
             mRetrieveRecipesRunnable = null; // because we need to essentially instantiated a brand new one
@@ -61,6 +68,7 @@ public class RecipeApiClient {
             @Override
             public void run() {
                 //let the user know its timed out
+
                 handler.cancel(true);
             }
         } , NETWORK_TIMEOUT, TimeUnit.MILLISECONDS);
@@ -77,6 +85,7 @@ public class RecipeApiClient {
             @Override
             public void run() {
                 //let the user know its timed out
+                mRecipeRequestTimeout.postValue(true);
                 handler.cancel(true);
             }
         } , NETWORK_TIMEOUT, TimeUnit.MILLISECONDS);
