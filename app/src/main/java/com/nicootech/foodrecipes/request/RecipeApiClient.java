@@ -68,7 +68,6 @@ public class RecipeApiClient {
             @Override
             public void run() {
                 //let the user know its timed out
-
                 handler.cancel(true);
             }
         } , NETWORK_TIMEOUT, TimeUnit.MILLISECONDS);

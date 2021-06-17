@@ -15,7 +15,7 @@ public class RecipeRepository {
     private String mQuery;
     private int mPageNumber;
     private MutableLiveData<Boolean>mIsQueryExhausted = new MutableLiveData<>();
-    private MediatorLiveData<List<Recipe>> mRecipe = new MediatorLiveData<>();
+    private MediatorLiveData<List<Recipe>> mRecipes = new MediatorLiveData<>();
 
     public static RecipeRepository getInstance(){
         if(instance == null){
@@ -32,11 +32,11 @@ public class RecipeRepository {
 
     private void initMediators(){
         LiveData<List<Recipe>> recipeListApiSource = mRecipeApiClient.getRecipes();
-        mRecipe.addSource(recipeListApiSource, new Observer<List<Recipe>>() {
+        mRecipes.addSource(recipeListApiSource, new Observer<List<Recipe>>() {
             @Override
             public void onChanged(List<Recipe> recipes) {
                 if(recipes != null){
-                    mRecipe.setValue(recipes);
+                    mRecipes.setValue(recipes);
                     doneQuery(recipes);
                 }
                 else{
@@ -48,7 +48,7 @@ public class RecipeRepository {
     }
     private void doneQuery(List<Recipe>list){
        if(list != null){
-           if(list.size()< 30){
+           if(list.size() % 30 !=0){
                mIsQueryExhausted.setValue(true);
            }
        }
@@ -62,21 +62,20 @@ public class RecipeRepository {
     }
 
     public LiveData<List<Recipe>> getRecipes(){
-    return mRecipe;
+    return mRecipes;
     }
 
     public LiveData<Recipe> getRecipe(){
         return mRecipeApiClient.getRecipe();
     }
-    public LiveData<Boolean> isRecipeRequestTimedOut(){
-        return mRecipeApiClient.isRecipeRequestTimedOut();
-    }
+
 
     public void searchRecipeById(String recipeId) {
+
         mRecipeApiClient.searchRecipeById(recipeId);
     }
 
-    public void searchRecipeApi(String query, int pageNumber){
+    public void searchRecipesApi(String query, int pageNumber){
         if(pageNumber == 0){
             pageNumber = 1;
         }
@@ -86,11 +85,15 @@ public class RecipeRepository {
         mRecipeApiClient.searchRecipesApi(query,pageNumber);
     }
     public void searchNextPage(){
-        searchRecipeApi(mQuery,mPageNumber+1);
+        searchRecipesApi(mQuery,mPageNumber+1);
     }
 
     public void cancelRequest(){
         mRecipeApiClient.cancelRequest();
+    }
+
+    public LiveData<Boolean> isRecipeRequestTimedOut(){
+        return mRecipeApiClient.isRecipeRequestTimedOut();
     }
 
 

@@ -1,8 +1,6 @@
 package com.nicootech.foodrecipes.viewmodel;
 
 
-import android.widget.SearchView;
-
 import com.nicootech.foodrecipes.models.Recipe;
 
 import com.nicootech.foodrecipes.repositories.RecipeRepository;
@@ -35,7 +33,7 @@ public class RecipeListViewModel extends ViewModel {
     public void searchRecipesApi(String query, int pageNumber){
         mIsViewingRecipes = true;
         mIsPerformingQuery = true;
-        mRecipeRepository.searchRecipeApi(query,pageNumber);
+        mRecipeRepository.searchRecipesApi(query,pageNumber);
     }
 
 
@@ -46,20 +44,24 @@ public class RecipeListViewModel extends ViewModel {
             mRecipeRepository.searchNextPage();
         }
     }
+    public boolean isViewingRecipes(){
+        return mIsViewingRecipes;
+    }
     public boolean isPerformingQuery() {
         return mIsPerformingQuery;
     }
 
-    public boolean isViewingRecipes(){
-        return mIsViewingRecipes;
-    }
-
-    public void setIsViewingRecipes(boolean isViewingRecipes) {
+    public void setIsViewingRecipes(boolean isViewingRecipes){
         mIsViewingRecipes = isViewingRecipes;
     }
-    public void setIsPerformingQuery(boolean isPerformingQuery) {
+
+    public void setIsPerformingQuery(Boolean isPerformingQuery){
         mIsPerformingQuery = isPerformingQuery;
     }
+
+//    public void setIsPerformingQuery(boolean isPerformingQuery) {
+//        mIsPerformingQuery = isPerformingQuery;
+//    }
     public boolean onBackButtonPressed(){
         if(mIsPerformingQuery){
            //cancel query

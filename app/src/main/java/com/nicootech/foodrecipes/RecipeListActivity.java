@@ -10,6 +10,7 @@ import android.widget.SearchView;
 import com.nicootech.foodrecipes.adapters.OnRecipeListener;
 import com.nicootech.foodrecipes.adapters.RecipeRecyclerAdapter;
 import com.nicootech.foodrecipes.models.Recipe;
+import com.nicootech.foodrecipes.util.Constants;
 import com.nicootech.foodrecipes.util.VerticalSpacingItemDecorator;
 import com.nicootech.foodrecipes.viewmodel.RecipeListViewModel;
 import com.nicootech.foodrecipes.util.Testing;
@@ -41,7 +42,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
         mSearchView = findViewById(R.id.search_view);
 
         initRecyclerView();
-        subscribeObserver();
+        subscribeObservers();
         initSearchView();
         if(!mRecipeListViewModel.isViewingRecipes()){
             displaySearchCategories();
@@ -49,7 +50,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
         setSupportActionBar(findViewById(R.id.toolbar));
     }
 
-    private void subscribeObserver(){
+    private void subscribeObservers(){
         mRecipeListViewModel.getRecipes().observe(this, new Observer<List<Recipe>>() {
             @Override
             public void onChanged(List<Recipe> recipes) {
@@ -66,7 +67,10 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
         mRecipeListViewModel.isQueryExhausted().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                if(aBoolean) Log.d(TAG, "onChanged: the query is exhausted...");
+                if(aBoolean) {
+                    Log.d(TAG, "onChanged: the query is exhausted..."+ aBoolean);
+                    mAdapter.setQueryExhausted();
+                }
             }
         });
     }
